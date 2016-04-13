@@ -30,6 +30,22 @@ split([X|Rest], [X|P], D) :- pari(X), split(Rest, P, D), !.
 split([X|Rest], P, [X|D]) :- split(Rest, P, D).
 
 
+%% hanoi(N)
+
+hanoi(N) :- move(N,'A','B','C'), !.
+
+move(1,Start,Goal,_) :-  
+    atomic_list_concat(['Move a disc from',Start,'to',Goal],' ',Out),
+    write(Out), 
+    nl. 
+move(N,Start,Goal,App) :- 
+    N>1, 
+    M is N-1, 
+    move(M,Start,App,Goal), 
+    move(1,Start,Goal,_), 
+    move(M,App,Goal,Start). 
+	
+
 %% prefisso(Pre,L)
 
 prefisso([], _) :- !.
