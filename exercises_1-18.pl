@@ -1,13 +1,16 @@
 %% genealogico
 
 genitore(tommaso,francesca).
-genitore(tommaso,vittorio).
 genitore(francesca,linda).
 genitore(francesca,leonardo).
 genitore(vittorio,bianca).
 genitore(vittorio,andrea).
 genitore(bianca,tommaso).
+genitore(tommaso,vittorio).
 genitore(gianroberto,vittorio). 
+genitore(vittorio,annalucia). 
+genitore(annalucia,roborbio). 
+genitore(roborbio,gianfilippo). 
 
 nonno(X,Y) :- genitore(X,Z), genitore(Z,Y).
 
@@ -16,9 +19,20 @@ fratello(X,Y) :- genitore(Z,X), genitore(Z,Y), X\=Y.
 zio(X,Y) :- genitore(Z,Y), fratello(Z,X).
 nipote(X,Y) :- nonno(Y,X); zio(Y,X).
 bisnipote(X,Y) :- bisnonno(Y,X). 
-discendente(X,Y) :- genitore(Y,X); nonno(Y,X); bisnonno(Y,X); (genitore(Y,Z), discendente(X,Z)).
 cugino(X,Y) :- genitore(A,X), genitore(B,Y), fratello(A,B).
 
+discendente(D, Avo) :- discendente(Avo, D, []).
+
+discendente(Start, Genitore, Visited) :- 
+		\+ member(Start, Visited), 
+		genitore(Start, Genitore).
+		
+discendente(Start, Goal, Visited) :-
+		\+ member(Start, Visited), 
+		genitore(Start, N), 
+		discendente(N, Goal, [Start|Visited]).
+		
+		
 %% fact(+X,?Y), vero se Y è il fattoriale di X.
 
 fact(0, 1) :- !.
@@ -251,5 +265,9 @@ path(Start, Goal, [Start|Path], Visited) :-
 		\+ member(Start, Visited), 
 		arc(Start, N), 
 		path(N, Goal, Path, [Start|Visited]).
+		
+
+
+
 
 
