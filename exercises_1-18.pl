@@ -19,7 +19,7 @@ fratello(X,Y) :- genitore(Z,X), genitore(Z,Y), X\=Y.
 zio(X,Y) :- genitore(Z,Y), fratello(Z,X).
 nipote(X,Y) :- nonno(Y,X); zio(Y,X).
 bisnipote(X,Y) :- bisnonno(Y,X). 
-cugino(X,Y) :- genitore(A,X), genitore(B,Y), fratello(A,B).
+cugino(X,Y) :- genitore(A,X), genitore(B,Y), fratello(A,B), \+ fratello(X,Y).
 
 discendente(D, Avo) :- discendente(Avo, D, []).
 
