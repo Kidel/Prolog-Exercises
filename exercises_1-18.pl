@@ -21,16 +21,8 @@ nipote(X,Y) :- nonno(Y,X); zio(Y,X).
 bisnipote(X,Y) :- bisnonno(Y,X). 
 cugino(X,Y) :- genitore(A,X), genitore(B,Y), fratello(A,B), \+ fratello(X,Y).
 
-discendente(D, Avo) :- discendente(Avo, D, []).
-
-discendente(Start, Genitore, Visited) :- 
-		\+ member(Start, Visited), 
-		genitore(Start, Genitore).
-		
-discendente(Start, Goal, Visited) :-
-		\+ member(Start, Visited), 
-		genitore(Start, N), 
-		discendente(N, Goal, [Start|Visited]).
+discendente(X,Y) :- genitore(X, Y).
+discendente(X,Y) :- genitore(X, Z), discendente(Z,Y).
 		
 		
 %% fact(+X,?Y), vero se Y è il fattoriale di X.
